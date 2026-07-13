@@ -2,6 +2,7 @@ package com.sanjay.footballtournamentapi.controller;
 
 import com.sanjay.footballtournamentapi.model.Tournament;
 import com.sanjay.footballtournamentapi.service.TournamentService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +24,7 @@ public class TournamentController {
     }
 
     @PostMapping
-    public Tournament addTournament(@RequestBody Tournament tournament) {
+    public Tournament addTournament(@Valid @RequestBody Tournament tournament) {
         return tournamentService.addTournament(tournament);
     }
 
@@ -33,7 +34,7 @@ public class TournamentController {
     }
 
     @PutMapping("/{id}")
-    public Tournament updateTournament(@PathVariable int id, @RequestBody Tournament tournament) {
+    public Tournament updateTournament(@PathVariable int id, @Valid @RequestBody Tournament tournament) {
         return tournamentService.updateTournament(id,tournament);
     }
 
