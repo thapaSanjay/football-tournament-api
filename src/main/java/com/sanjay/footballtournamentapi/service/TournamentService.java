@@ -44,5 +44,13 @@ public class TournamentService {
 
     }
 
+    public boolean deleteTournament(int id) {
+        if(tournamentRepository.existsById(id)) {
+            tournamentRepository.deleteById(id);
+            return true;
+        }
+        return false;
+    }
+
 
 }

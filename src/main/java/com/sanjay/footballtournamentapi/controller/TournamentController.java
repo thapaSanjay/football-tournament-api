@@ -2,6 +2,7 @@ package com.sanjay.footballtournamentapi.controller;
 
 import com.sanjay.footballtournamentapi.model.Tournament;
 import com.sanjay.footballtournamentapi.service.TournamentService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,6 +35,16 @@ public class TournamentController {
     @PutMapping("/{id}")
     public Tournament updateTournament(@PathVariable int id, @RequestBody Tournament tournament) {
         return tournamentService.updateTournament(id,tournament);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteTournament(@PathVariable int id) {
+        boolean deleted = tournamentService.deleteTournament(id);
+
+        if(!deleted) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.noContent().build();
     }
 
 }
