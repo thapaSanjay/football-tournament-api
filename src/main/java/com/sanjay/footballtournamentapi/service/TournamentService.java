@@ -19,5 +19,9 @@ public class TournamentService {
         return tournamentRepository.findAll();
     }
 
+    public Tournament addTournament(Tournament tournament) {
+        return tournamentRepository.save(tournament);
+    }
+
 
 }
