@@ -40,12 +40,8 @@ public class TournamentController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTournament(@PathVariable int id) {
-        boolean deleted = tournamentService.deleteTournament(id);
-
-        if(!deleted) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.noContent().build();
+       tournamentService.deleteTournament(id);
+       return  ResponseEntity.noContent().build();
     }
 
 }

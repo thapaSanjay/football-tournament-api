@@ -1,5 +1,6 @@
 package com.sanjay.footballtournamentapi.service;
 
+import com.sanjay.footballtournamentapi.exception.TournamentNotFoundException;
 import com.sanjay.footballtournamentapi.model.Tournament;
 import com.sanjay.footballtournamentapi.repository.TournamentRepository;
 import org.springframework.stereotype.Service;
@@ -24,16 +25,12 @@ public class TournamentService {
     }
 
     public Tournament getTournamentById(int id) {
-        return tournamentRepository.findById(id).orElse(null);
+        return tournamentRepository.findById(id).orElseThrow(()->new TournamentNotFoundException(id));
     }
 
     public Tournament updateTournament(int id, Tournament tournament) {
 
-        Tournament ExistingTournament = tournamentRepository.findById(id).orElse(null);
-
-        if(ExistingTournament == null) {
-            return null;
-        }
+        Tournament ExistingTournament = tournamentRepository.findById(id).orElseThrow(()->new TournamentNotFoundException(id));
 
         ExistingTournament.setName(tournament.getName());
         ExistingTournament.setYear(tournament.getYear());
@@ -44,12 +41,13 @@ public class TournamentService {
 
     }
 
-    public boolean deleteTournament(int id) {
-        if(tournamentRepository.existsById(id)) {
-            tournamentRepository.deleteById(id);
-            return true;
+    public void deleteTournament(int id) {
+        if(!tournamentRepository.existsById(id)) {
+           throw new TournamentNotFoundException(id);
         }
-        return false;
+
+        tournamentRepository.deleteById(id);
+
     }
 
 

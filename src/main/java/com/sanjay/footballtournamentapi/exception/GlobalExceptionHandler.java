@@ -27,4 +27,15 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(TournamentNotFoundException.class)
+    public ResponseEntity<Map<String, String>> handleTournamentNotFoundException(
+            TournamentNotFoundException exception
+    ) {
+        Map<String, String> error = new HashMap<>();
+
+        error.put("message", exception.getMessage());
+
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
 }
+
