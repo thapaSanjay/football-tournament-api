@@ -27,5 +27,22 @@ public class TournamentService {
         return tournamentRepository.findById(id).orElse(null);
     }
 
+    public Tournament updateTournament(int id, Tournament tournament) {
+
+        Tournament ExistingTournament = tournamentRepository.findById(id).orElse(null);
+
+        if(ExistingTournament == null) {
+            return null;
+        }
+
+        ExistingTournament.setName(tournament.getName());
+        ExistingTournament.setYear(tournament.getYear());
+        ExistingTournament.setHostCountry(tournament.getHostCountry());
+        ExistingTournament.setStatus(tournament.getStatus());
+
+        return  tournamentRepository.save(ExistingTournament);
+
+    }
+
 
 }

@@ -31,4 +31,9 @@ public class TournamentController {
         return tournamentService.getTournamentById(id);
     }
 
+    @PutMapping("/{id}")
+    public Tournament updateTournament(@PathVariable int id, @RequestBody Tournament tournament) {
+        return tournamentService.updateTournament(id,tournament);
+    }
+
 }
