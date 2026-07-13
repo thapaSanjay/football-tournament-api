@@ -23,5 +23,9 @@ public class TournamentService {
         return tournamentRepository.save(tournament);
     }
 
+    public Tournament getTournamentById(int id) {
+        return tournamentRepository.findById(id).orElse(null);
+    }
+
 
 }

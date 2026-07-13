@@ -25,4 +25,10 @@ public class TournamentController {
     public Tournament addTournament(@RequestBody Tournament tournament) {
         return tournamentService.addTournament(tournament);
     }
+
+    @GetMapping("/{id}")
+    public Tournament getTournamentById(@PathVariable  int id) {
+        return tournamentService.getTournamentById(id);
+    }
+
 }
