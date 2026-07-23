@@ -59,5 +59,16 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(FootballMatchNotFoundException.class)
+    public ResponseEntity<Map<String, String>> handleFootballMatchNotFoundException(
+            FootballMatchNotFoundException exception
+    ) {
+        Map<String, String> error = new HashMap<>();
+
+        error.put("message", exception.getMessage());
+
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
 }
 
