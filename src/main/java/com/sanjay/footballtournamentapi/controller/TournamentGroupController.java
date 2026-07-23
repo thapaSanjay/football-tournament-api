@@ -2,6 +2,7 @@ package com.sanjay.footballtournamentapi.controller;
 
 import com.sanjay.footballtournamentapi.model.TournamentGroup;
 import com.sanjay.footballtournamentapi.service.TournamentGroupService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,7 +18,7 @@ public class TournamentGroupController {
     }
 
     @PostMapping("/tournament/{tournamentId}")
-    public TournamentGroup addGroupToTournament(@PathVariable int tournamentId, @RequestBody TournamentGroup tournamentGroup) {
+    public TournamentGroup addGroupToTournament(@PathVariable int tournamentId, @Valid @RequestBody TournamentGroup tournamentGroup) {
         return tournamentGroupService.addGroupToTournament(tournamentId, tournamentGroup);
     }
 

@@ -1,6 +1,7 @@
 package com.sanjay.footballtournamentapi.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 public class TournamentGroup {
@@ -9,6 +10,7 @@ public class TournamentGroup {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @NotBlank(message = "Group name is required")
     private String name;
 
     @ManyToOne
