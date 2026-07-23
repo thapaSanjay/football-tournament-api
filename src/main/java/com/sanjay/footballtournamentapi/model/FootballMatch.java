@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 public class FootballMatch {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)10
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @ManyToOne
