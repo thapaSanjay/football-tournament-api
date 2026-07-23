@@ -1,5 +1,6 @@
 package com.sanjay.footballtournamentapi.service;
 
+import com.sanjay.footballtournamentapi.exception.TournamentGroupNotFoundException;
 import com.sanjay.footballtournamentapi.exception.TournamentNotFoundException;
 import com.sanjay.footballtournamentapi.model.Tournament;
 import com.sanjay.footballtournamentapi.model.TournamentGroup;
@@ -36,5 +37,27 @@ public class TournamentGroupService {
 
     public List<TournamentGroup> getGroupsByTournamentId(int tournamentId) {
         return tournamentGroupRepository.findByTournamentId(tournamentId);
+    }
+
+    public TournamentGroup getGroupById(int id) {
+        return tournamentGroupRepository.findById(id)
+                .orElseThrow(() -> new TournamentGroupNotFoundException(id));
+    }
+
+    public TournamentGroup updateGroup(int id, TournamentGroup tournamentGroup) {
+        TournamentGroup existingGroup = tournamentGroupRepository.findById(id)
+                .orElseThrow(() -> new TournamentGroupNotFoundException(id));
+
+        existingGroup.setName(tournamentGroup.getName());
+
+        return tournamentGroupRepository.save(existingGroup);
+    }
+
+    public void deleteGroup(int id) {
+        if (!tournamentGroupRepository.existsById(id)) {
+            throw new TournamentGroupNotFoundException(id);
+        }
+
+        tournamentGroupRepository.deleteById(id);
     }
 }

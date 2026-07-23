@@ -37,5 +37,16 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(TournamentGroupNotFoundException.class)
+    public ResponseEntity<Map<String, String>> handleTournamentGroupNotFoundException(
+            TournamentGroupNotFoundException exception
+    ) {
+        Map<String, String> error = new HashMap<>();
+
+        error.put("message", exception.getMessage());
+
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
 }
 
