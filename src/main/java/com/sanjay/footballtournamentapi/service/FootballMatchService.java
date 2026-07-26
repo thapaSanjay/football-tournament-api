@@ -32,18 +32,26 @@ public class FootballMatchService {
             int awayTeamId,
             FootballMatch footballMatch
     ) {
+        if (homeTeamId == awayTeamId) {
+            throw new IllegalArgumentException("Home team and away team cannot be same");
+        }
+
         Team homeTeam = teamRepository.findById(homeTeamId)
                 .orElseThrow(() -> new TeamNotFoundException(homeTeamId));
 
         Team awayTeam = teamRepository.findById(awayTeamId)
                 .orElseThrow(() -> new TeamNotFoundException(awayTeamId));
 
-        if (homeTeamId == awayTeamId) {
-            throw new IllegalArgumentException("Home team and away team cannot be same");
+        if (homeTeam.getGroup().getId() != awayTeam.getGroup().getId()) {
+            throw new IllegalArgumentException("Group stage match must be between teams from the same group");
         }
 
         footballMatch.setHomeTeam(homeTeam);
         footballMatch.setAwayTeam(awayTeam);
+
+        footballMatch.setHomeScore(0);
+        footballMatch.setAwayScore(0);
+        footballMatch.setStatus("SCHEDULED");
 
         return footballMatchRepository.save(footballMatch);
     }
@@ -67,6 +75,10 @@ public class FootballMatchService {
 
         if ("COMPLETED".equals(existingMatch.getStatus())) {
             throw new IllegalArgumentException("Score has already been recorded for this match");
+        }
+
+        if (footballMatch.getHomeScore() < 0 || footballMatch.getAwayScore() < 0) {
+            throw new IllegalArgumentException("Score cannot be negative");
         }
 
         existingMatch.setHomeScore(footballMatch.getHomeScore());
