@@ -1,5 +1,6 @@
 package com.sanjay.footballtournamentapi.controller;
 
+import com.sanjay.footballtournamentapi.dto.StandingResponseDto;
 import com.sanjay.footballtournamentapi.model.Standing;
 import com.sanjay.footballtournamentapi.service.StandingService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,12 +20,12 @@ public class StandingController {
     }
 
     @GetMapping("/group/{groupId}")
-    public List<Standing> getStandingsByGroupId(@PathVariable int groupId) {
+    public List<StandingResponseDto> getStandingsByGroupId(@PathVariable int groupId) {
         return standingService.getStandingsByGroupId(groupId);
     }
 
     @GetMapping("/group/{groupId}/top-teams")
-    public List<Standing> getTopTwoTeamsByGroupId(@PathVariable int groupId) {
+    public List<StandingResponseDto> getTopTwoTeamsByGroupId(@PathVariable int groupId) {
         return standingService.getTopTwoTeamsByGroupId(groupId);
     }
 }

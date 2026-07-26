@@ -1,5 +1,6 @@
 package com.sanjay.footballtournamentapi.service;
 
+import com.sanjay.footballtournamentapi.dto.StandingResponseDto;
 import com.sanjay.footballtournamentapi.model.FootballMatch;
 import com.sanjay.footballtournamentapi.model.Standing;
 import com.sanjay.footballtournamentapi.model.Team;
@@ -57,15 +58,37 @@ public class StandingService {
         standingRepository.save(standing);
     }
 
-    public List<Standing> getStandingsByGroupId(int groupId) {
-        return standingRepository.findByGroupIdOrderByPointsDescGoalDifferenceDescGoalsForDesc(groupId);
+    public List<StandingResponseDto> getStandingsByGroupId(int groupId) {
+        return standingRepository.findByGroupIdOrderByPointsDescGoalDifferenceDescGoalsForDesc(groupId)
+                .stream()
+                .map(this::mapToDto)
+                .toList();
     }
 
-    public List<Standing> getTopTwoTeamsByGroupId(int groupId) {
+    public List<StandingResponseDto> getTopTwoTeamsByGroupId(int groupId) {
         return standingRepository
                 .findByGroupIdOrderByPointsDescGoalDifferenceDescGoalsForDesc(groupId)
                 .stream()
                 .limit(2)
+                .map(this::mapToDto)
                 .toList();
     }
+
+    private StandingResponseDto mapToDto(Standing standing) {
+        return new StandingResponseDto(
+                standing.getTeam().getId(),
+                standing.getTeam().getName(),
+                standing.getGroup().getName(),
+                standing.getPlayed(),
+                standing.getWon(),
+                standing.getDrawn(),
+                standing.getLost(),
+                standing.getGoalsFor(),
+                standing.getGoalsAgainst(),
+                standing.getGoalDifference(),
+                standing.getPoints()
+        );
+    }
+
+
 }
