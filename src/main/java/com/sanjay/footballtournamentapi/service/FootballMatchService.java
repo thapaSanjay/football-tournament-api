@@ -15,13 +15,16 @@ public class FootballMatchService {
 
     private final FootballMatchRepository footballMatchRepository;
     private final TeamRepository teamRepository;
+    private final StandingService standingService;
 
     public FootballMatchService(
             FootballMatchRepository footballMatchRepository,
-            TeamRepository teamRepository
+            TeamRepository teamRepository,
+            StandingService standingService
     ) {
         this.footballMatchRepository = footballMatchRepository;
         this.teamRepository = teamRepository;
+        this.standingService = standingService;
     }
 
     public FootballMatch createMatch(
@@ -62,11 +65,20 @@ public class FootballMatchService {
         FootballMatch existingMatch = footballMatchRepository.findById(id)
                 .orElseThrow(() -> new FootballMatchNotFoundException(id));
 
+        if ("COMPLETED".equals(existingMatch.getStatus())) {
+            throw new IllegalArgumentException("Score has already been recorded for this match");
+        }
+
         existingMatch.setHomeScore(footballMatch.getHomeScore());
         existingMatch.setAwayScore(footballMatch.getAwayScore());
         existingMatch.setStatus("COMPLETED");
 
-        return footballMatchRepository.save(existingMatch);
+        FootballMatch savedMatch = footballMatchRepository.save(existingMatch);
+
+        standingService.updateStandingsForMatch(savedMatch);
+
+        return savedMatch;
+
     }
 
     public void deleteMatch(int id) {
