@@ -22,4 +22,9 @@ public class StandingController {
     public List<Standing> getStandingsByGroupId(@PathVariable int groupId) {
         return standingService.getStandingsByGroupId(groupId);
     }
+
+    @GetMapping("/group/{groupId}/top-teams")
+    public List<Standing> getTopTwoTeamsByGroupId(@PathVariable int groupId) {
+        return standingService.getTopTwoTeamsByGroupId(groupId);
+    }
 }

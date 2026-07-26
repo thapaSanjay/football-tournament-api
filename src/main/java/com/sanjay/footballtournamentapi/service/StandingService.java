@@ -60,4 +60,12 @@ public class StandingService {
     public List<Standing> getStandingsByGroupId(int groupId) {
         return standingRepository.findByGroupIdOrderByPointsDescGoalDifferenceDescGoalsForDesc(groupId);
     }
+
+    public List<Standing> getTopTwoTeamsByGroupId(int groupId) {
+        return standingRepository
+                .findByGroupIdOrderByPointsDescGoalDifferenceDescGoalsForDesc(groupId)
+                .stream()
+                .limit(2)
+                .toList();
+    }
 }
