@@ -59,3 +59,29 @@ DELETE /matches/{id}
 
 GET /standings/group/{groupId}
 GET /standings/group/{groupId}/top-teams
+
+```
+### Example Standing Response
+```
+[
+{
+"teamId": 1,
+"teamName": "Brazil",
+"groupName": "Group A",
+"played": 2,
+"won": 2,
+"drawn": 0,
+"lost": 0,
+"goalsFor": 5,
+"goalsAgainst": 1,
+"goalDifference": 4,
+"points": 6
+}
+]
+```
+### To Run project
+Create MySQL database:
+```
+CREATE DATABASE football_tournament;
+```
+
